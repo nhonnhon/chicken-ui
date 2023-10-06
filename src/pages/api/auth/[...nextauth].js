@@ -1,5 +1,6 @@
 import axios from "axios";
 import NextAuth from "next-auth/next";
+import CredentialsProvider from "next-auth/providers/credentials";
 
 export default NextAuth({
   secret: process.env?.NEXTAUTH_URL || "aad37b9ff9d358f787c49a5159fbffaf",
