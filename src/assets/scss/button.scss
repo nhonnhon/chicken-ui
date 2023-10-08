@@ -1,0 +1,175 @@
+.btn {
+  @apply inline-flex items-center justify-center gap-2 align-middle;
+  @apply font-medium no-underline;
+  @apply transition-all duration-300;
+  @apply pointer-events-auto cursor-pointer select-none;
+  @apply min-h-[38px] py-1.5 px-3;
+  @apply appearance-none rounded;
+  @apply hover:no-underline;
+  // Variants
+  &.contained {
+    @apply text-white;
+    &.primary {
+      @apply bg-indigo-500;
+    }
+    &.secondary {
+      @apply bg-slate-500;
+    }
+    &.danger {
+      @apply bg-red-500;
+    }
+    &.warning {
+      @apply bg-amber-500;
+    }
+    &.success {
+      @apply bg-emerald-500;
+    }
+    &.info {
+      @apply bg-sky-500;
+    }
+    &.dark {
+      @apply bg-slate-800;
+    }
+    &.light {
+      @apply bg-gray-200 text-neutral-700;
+    }
+    &:not(:disabled, .disabled):hover {
+      &.primary {
+        @apply bg-indigo-700;
+      }
+      &.secondary {
+        @apply bg-slate-600;
+      }
+      &.danger {
+        @apply bg-red-600;
+      }
+      &.warning {
+        @apply bg-amber-600;
+      }
+      &.success {
+        @apply bg-emerald-600;
+      }
+      &.info {
+        @apply bg-indigo-600;
+      }
+      &.dark {
+        @apply bg-slate-600;
+      }
+      &.light {
+        @apply bg-gray-600;
+      }
+    }
+    &:disabled,
+    &.disabled {
+      &.primary {
+        @apply bg-indigo-300;
+      }
+      &.secondary {
+        @apply bg-slate-300;
+      }
+      &.danger {
+        @apply bg-red-300;
+      }
+      &.warning {
+        @apply bg-amber-300;
+      }
+      &.success {
+        @apply bg-emerald-300;
+      }
+      &.info {
+        @apply bg-sky-300;
+      }
+      &.dark {
+        @apply bg-slate-300;
+      }
+      &.light {
+        @apply bg-gray-100 text-neutral-300;
+      }
+    }
+  }
+  &.outlined {
+    @apply ring-1 ring-inset;
+    &.primary {
+      @apply text-indigo-500 ring-indigo-300;
+      .loading {
+        @apply border-indigo-200 border-l-indigo-400;
+      }
+    }
+    &.secondary {
+      @apply text-slate-500 ring-slate-300;
+      .loading {
+        @apply border-slate-200 border-l-slate-400;
+      }
+    }
+    &.danger {
+      @apply text-red-500 ring-red-300;
+      .loading {
+        @apply border-red-200 border-l-red-400;
+      }
+    }
+    &.warning {
+      @apply text-amber-500 ring-amber-300;
+      .loading {
+        @apply border-amber-200 border-l-amber-400;
+      }
+    }
+    &.success {
+      @apply text-emerald-500 ring-emerald-300;
+      .loading {
+        @apply border-emerald-200 border-l-emerald-400;
+      }
+    }
+    &.info {
+      @apply text-sky-500 ring-sky-300;
+      .loading {
+        @apply border-sky-200 border-l-sky-400;
+      }
+    }
+    &:not(:disabled, .disabled):hover {
+      &.primary {
+        @apply bg-indigo-100;
+      }
+      &.secondary {
+        @apply bg-slate-100;
+      }
+      &.danger {
+        @apply bg-red-100;
+      }
+      &.warning {
+        @apply bg-amber-100;
+      }
+      &.success {
+        @apply bg-emerald-100;
+      }
+      &.info {
+        @apply bg-sky-100;
+      }
+    }
+    &:disabled,
+    &.disabled {
+      &.primary {
+        @apply text-indigo-300 ring-indigo-200;
+      }
+      &.secondary {
+        @apply text-slate-300 ring-slate-200;
+      }
+      &.danger {
+        @apply text-red-300 ring-red-200;
+      }
+      &.warning {
+        @apply text-amber-300 ring-amber-200;
+      }
+      &.success {
+        @apply text-emerald-300 ring-emerald-200;
+      }
+      &.info {
+        @apply text-sky-300 ring-sky-200;
+      }
+    }
+  }
+  // States
+  &:disabled,
+  &.disabled {
+    @apply pointer-events-none cursor-default;
+  }
+}

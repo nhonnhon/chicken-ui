@@ -3,7 +3,7 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export default NextAuth({
-  secret: process.env?.NEXTAUTH_URL || "aad37b9ff9d358f787c49a5159fbffaf",
+  secret: process.env.NEXTAUTH_SECRET || "aad37b9ff9d358f787c49a5159fbffaf",
   providers: [
     CredentialsProvider({
       name: "Login in with User/Pass",
@@ -13,14 +13,13 @@ export default NextAuth({
       },
       async authorize(credentials) {
         if (credentials == null) return null;
-        const { email, password } = credentials;
+        const { username, password } = credentials;
         try {
           const { user, accessToken: jwt } = await axios.post(
-            `${process.env.BACKEND_URL}/auth/login`,
+            `http://localhost:3900/auth/login`,
             {
-              username: email,
+              username,
               password,
-              isB2B,
             }
           );
           return { ...user, jwt };
