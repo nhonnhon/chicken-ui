@@ -16,7 +16,7 @@ export default NextAuth({
         const { username, password } = credentials;
         try {
           const { user, accessToken: jwt } = await axios.post(
-            `http://localhost:3900/auth/login`,
+            `${process.env.BACKEND_URL}/auth/login`,
             {
               username,
               password,
