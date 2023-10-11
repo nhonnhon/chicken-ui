@@ -13,6 +13,10 @@ const markaziText = Markazi_Text({
   variable: "--font-inter",
 });
 
+const Noop: React.FC = ({ children }: React.PropsWithChildren<any>) => (
+  <>{children}</>
+);
+
 export default function App({
   Component,
   pageProps: { session, ...pageProps },
@@ -32,6 +36,8 @@ export default function App({
     });
   }
 
+  const Layout = (Component as any).Layout || Noop;
+
   return (
     <>
       <style jsx global>{`
@@ -42,7 +48,9 @@ export default function App({
       <SessionProvider session={session}>
         <QueryClientProvider client={queryClientRef.current}>
           <div className={`${markaziText.variable} font-sans`}></div>
-          <Component {...pageProps} />
+          <Layout pageProps={pageProps}>
+            <Component {...pageProps} />
+          </Layout>
         </QueryClientProvider>
       </SessionProvider>
     </>
