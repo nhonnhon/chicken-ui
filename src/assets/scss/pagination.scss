@@ -1,0 +1,29 @@
+.pagination {
+  @apply flex;
+  &__list {
+    @apply inline-flex items-center justify-center space-x-1.5;
+  }
+  &__item {
+    @apply overflow-hidden rounded-md border border-slate-200 bg-white;
+    @apply transition-all duration-150;
+    &:not(.pagination__item--disabled) {
+      @apply hover:border-indigo-500 hover:bg-indigo-500 hover:text-white;
+    }
+    &--active {
+      @apply border-indigo-500 bg-indigo-500 text-white;
+      button {
+        @apply border-slate-200;
+      }
+    }
+    &--disabled {
+      @apply text-gray-400;
+    }
+    button {
+      @apply h-8 w-7;
+      @apply flex items-center justify-center;
+    }
+  }
+  &__icon i {
+    @apply text-xl;
+  }
+}
