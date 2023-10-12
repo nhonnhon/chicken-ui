@@ -18,14 +18,9 @@ export const LoginForm: React.FC = () => {
 
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const { control, handleSubmit, watch } = useForm<ILoginForm>({
+  const { control, handleSubmit } = useForm<ILoginForm>({
     resolver: loginFormSchema(),
   });
-
-  const name = watch("username");
-  console.log("🚀 ~ file: index.tsx:25 ~ name:", name);
-  const pas = watch("password");
-  console.log("🚀 ~ file: index.tsx:27 ~ pas:", pas);
 
   const onSubmit: SubmitHandler<ILoginForm> = async ({
     username,
@@ -38,10 +33,6 @@ export const LoginForm: React.FC = () => {
       password,
     });
 
-    // const result = await axios.post(`http://localhost:3900/auth/login`, {
-    //   username,
-    //   password,
-    // });
     if (result) {
       router.replace(ROUTES.DASHBOARD);
       setIsLoading(false);
