@@ -1,13 +1,17 @@
+import * as React from "react";
+
 import { useGetChickenDetailQuery } from "@/api/chicken/use-chicken-detail";
 import Loading from "@/components/loading";
 import NotFound from "@/components/not-found";
 import { ROUTES } from "@/configs/routes.config";
+import { ChickenForm } from "@/features/chicken-form";
 import { MainLayout } from "@/layouts/main";
-import { ChevronDoubleLeftIcon } from "@heroicons/react/20/solid";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { IChickenInformation } from "./type";
+import { TopAdmin } from "@/components";
 
 export default function ChickenDetail() {
   const router = useRouter();
@@ -15,16 +19,18 @@ export default function ChickenDetail() {
 
   const { data, isFetching, isError } = useGetChickenDetailQuery(id);
 
-  const renderBackToList = () => {
-    return (
-      <Link
-        href={ROUTES.DASHBOARD}
-        className="text-md font-normal text-yellow-600 underline pr-4 inline-block mt-2"
-      >
-        Trở về trang chính
-      </Link>
-    );
-  };
+  const formDefaultValues: IChickenInformation = React.useMemo(() => {
+    return {
+      name: data?.name || "",
+      description: data?.description || "",
+      price: data?.price,
+      photo1: data?.photo1 || "",
+      photo2: data?.photo2 || "",
+      photo3: data?.photo3 || "",
+      ytb_link: data?.ytb_link || "",
+      tiktok_link: data?.tiktok_link || "",
+    };
+  }, [data]);
 
   if (isFetching) {
     return <Loading />;
@@ -32,12 +38,17 @@ export default function ChickenDetail() {
 
   if (isError) {
     <>
-      {renderBackToList()}
+      <TopAdmin />
       <NotFound />
     </>;
   }
 
-  return <>{renderBackToList()}</>;
+  return (
+    <>
+      <TopAdmin />
+      <ChickenForm isEdit={true} formDefaultValues={formDefaultValues} />
+    </>
+  );
 }
 
 ChickenDetail.Layout = MainLayout;

@@ -21,12 +21,14 @@ export const ChickenList: React.FC<IProps> = ({ isAdmin }) => {
 
   return (
     <div className="py-4">
-      <Link
-        href={`/chicken/add`}
-        className="text-lg font-normal text-yellow-500 underline pr-4"
-      >
-        Thêm mới
-      </Link>
+      {isAdmin ? (
+        <Link
+          href={`/chicken/add`}
+          className="text-lg font-normal text-yellow-500 underline pr-4"
+        >
+          Thêm mới
+        </Link>
+      ) : null}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 pt-4">
         {data?.data.map((chicken) => (
           <div

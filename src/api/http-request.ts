@@ -11,6 +11,7 @@ export async function post<T>(
   data: any,
   options?: AxiosRequestConfig
 ) {
+  console.log("🚀 ~ file: http-request.ts:14 ~ data:", data);
   return axiosClient.post<T>(url, data, options);
 }
 

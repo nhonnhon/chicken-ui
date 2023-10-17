@@ -1,6 +1,4 @@
-import React, { FC, HTMLAttributes, memo, ReactNode } from "react";
-import Image from "next/image";
-import Logo from "@/assets/images/logo.png";
+import React, { memo } from "react";
 
 const NotFound = () => {
   return (

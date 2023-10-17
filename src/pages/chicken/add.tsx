@@ -1,4 +1,5 @@
 import { useGetChickenDetailQuery } from "@/api/chicken/use-chicken-detail";
+import { TopAdmin } from "@/components";
 import Loading from "@/components/loading";
 import NotFound from "@/components/not-found";
 import { ROUTES } from "@/configs/routes.config";
@@ -11,21 +12,21 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 export default function ChickenAddNew() {
-  const renderBackToList = () => {
-    return (
-      <Link
-        href={ROUTES.DASHBOARD}
-        className="text-md font-normal text-yellow-600 underline pr-4 inline-block mt-2"
-      >
-        Trở về trang chính 123
-      </Link>
-    );
+  const formDefaultValues = {
+    name: "",
+    description: "",
+    price: undefined,
+    photo1: "",
+    photo2: "",
+    photo3: "",
+    ytb_link: "",
+    tiktok_link: "",
   };
 
   return (
     <>
-      {renderBackToList()}
-      <ChickenForm />
+      <TopAdmin />
+      <ChickenForm formDefaultValues={formDefaultValues} />
     </>
   );
 }

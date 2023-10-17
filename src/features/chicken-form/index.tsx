@@ -1,16 +1,42 @@
+import { useUploadMutation } from "@/api/upload/use-upload-mutation";
 import { FormInput, FormUpload } from "@/components";
+import Button from "@/components/button";
 import Heading from "@/components/heading";
-import { useForm } from "react-hook-form";
+import { IChickenInformation } from "@/pages/chicken/type";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 interface IProps {
   isEdit?: boolean;
+  formDefaultValues: IChickenInformation;
 }
 
-export const ChickenForm: React.FC<IProps> = ({ isEdit = false }) => {
-  const { control, handleSubmit } = useForm();
+export const ChickenForm: React.FC<IProps> = ({
+  isEdit = false,
+  formDefaultValues,
+}) => {
+  const { mutate: uploadNewImage, isLoading } = useUploadMutation();
+  console.log(
+    "🚀 ~ file: index.tsx:15 ~ formDefaultValues:",
+    formDefaultValues
+  );
+  const { control, handleSubmit, setValue } = useForm<IChickenInformation>({
+    defaultValues: formDefaultValues,
+  });
 
-  const onSubmit = async () => {
+  const onSubmit: SubmitHandler<IChickenInformation> = async (formValues) => {
+    console.log("🚀 ~ file: index.tsx:24 ~ onSubmit ~ formValues:", formValues);
     //
+  };
+
+  const onUploadImage = (file: File, id: string) => {
+    console.log("🚀 ~ file: index.tsx:32 ~ onUploadImage ~ file:", file);
+    if (file) {
+      uploadNewImage(file, {
+        onSuccess: (data) => {
+          console.log("🚀 ~ file: index.tsx:35 ~ onUploadImage ~ data:", data);
+        },
+      });
+    }
   };
 
   return (
@@ -23,7 +49,6 @@ export const ChickenForm: React.FC<IProps> = ({ isEdit = false }) => {
         <div className="mb-4">
           <FormInput
             name="name"
-            defaultValue={""}
             placeholder="Tên"
             control={control}
             labelText="Nhập tên"
@@ -32,19 +57,41 @@ export const ChickenForm: React.FC<IProps> = ({ isEdit = false }) => {
         <div className="mb-4">
           <FormInput
             name="description"
-            defaultValue={""}
             placeholder="Mô tả"
             control={control}
             labelText="Mô tả"
           />
         </div>
+        <div className="mb-4">
+          <FormInput
+            name="price"
+            type="number"
+            placeholder="Giá"
+            control={control}
+            labelText="Giá"
+          />
+        </div>
         <div className="mb-6">
-          <FormUpload labelText="Photo 1" />
+          <FormUpload
+            labelText="Photo 1"
+            onUploadImage={(file: File) => onUploadImage(file, "photo1")}
+          />
+        </div>
+        <div className="mb-6">
+          <FormUpload
+            labelText="Photo 2"
+            onUploadImage={(file: File) => onUploadImage(file, "photo2")}
+          />
+        </div>
+        <div className="mb-6">
+          <FormUpload
+            labelText="Photo 3"
+            onUploadImage={(file: File) => onUploadImage(file, "photo3")}
+          />
         </div>
         <div className="mb-6">
           <FormInput
             name="ytb_link"
-            defaultValue={""}
             placeholder="Nhập link"
             control={control}
             labelText="Link video 1"
@@ -53,12 +100,12 @@ export const ChickenForm: React.FC<IProps> = ({ isEdit = false }) => {
         <div className="mb-6">
           <FormInput
             name="tiktok_link"
-            defaultValue={""}
             placeholder="Nhập link"
             control={control}
             labelText="Link video 2"
           />
         </div>
+        <Button type="submit" variant="contained" text="Lưu" />
       </form>
     </div>
   );

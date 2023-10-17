@@ -15,14 +15,14 @@ export default NextAuth({
         if (credentials == null) return null;
         const { username, password } = credentials;
         try {
-          const { user, accessToken: jwt } = await axios.post(
+          const data = await axios.post(
             `${process.env.BACKEND_URL}/auth/login`,
             {
               username,
               password,
             }
           );
-          return { ...user, jwt };
+          return { ...data.data.user, jwt: data.data.accessToken };
         } catch (error) {
           // Sign In Fail
           return null;
