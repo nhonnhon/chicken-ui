@@ -11,6 +11,7 @@ const nextConfig = {
   env: {
     BACKEND_URL: process.env.BACKEND_URL,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    AWS_S3_ENDPOINT: process.env.AWS_S3_ENDPOINT,
   },
 };
 

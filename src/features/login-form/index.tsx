@@ -6,7 +6,6 @@ import Button from "@/components/button";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { ROUTES } from "@/configs/routes.config";
-import axios from "axios";
 
 interface ILoginForm {
   username: string;

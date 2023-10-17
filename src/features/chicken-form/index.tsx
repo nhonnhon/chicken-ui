@@ -4,6 +4,10 @@ import Button from "@/components/button";
 import Heading from "@/components/heading";
 import { IChickenInformation } from "@/pages/chicken/type";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { chickenFormSchema } from "./chicken-schema";
+import { useCreateChickenMutation } from "@/api/chicken/use-chicken-create.mutation";
+import { useRouter } from "next/router";
+import { ROUTES } from "@/configs/routes.config";
 
 interface IProps {
   isEdit?: boolean;
@@ -14,26 +18,34 @@ export const ChickenForm: React.FC<IProps> = ({
   isEdit = false,
   formDefaultValues,
 }) => {
-  const { mutate: uploadNewImage, isLoading } = useUploadMutation();
-  console.log(
-    "🚀 ~ file: index.tsx:15 ~ formDefaultValues:",
-    formDefaultValues
-  );
+  const router = useRouter();
+
+  const { mutate: uploadNewImage } = useUploadMutation();
+  const { mutate: createChicken } = useCreateChickenMutation();
+
   const { control, handleSubmit, setValue } = useForm<IChickenInformation>({
     defaultValues: formDefaultValues,
+    resolver: chickenFormSchema(),
   });
 
   const onSubmit: SubmitHandler<IChickenInformation> = async (formValues) => {
-    console.log("🚀 ~ file: index.tsx:24 ~ onSubmit ~ formValues:", formValues);
-    //
+    if (formValues.price) {
+      const numberPrice = parseInt(formValues.price as string);
+      formValues.price = numberPrice;
+    }
+    createChicken(formValues, {
+      onSuccess: () => {
+        router.push(ROUTES.DASHBOARD);
+      },
+    });
   };
 
-  const onUploadImage = (file: File, id: string) => {
-    console.log("🚀 ~ file: index.tsx:32 ~ onUploadImage ~ file:", file);
+  const onUploadImage = (file: File, id: "photo1" | "photo2" | "photo3") => {
     if (file) {
       uploadNewImage(file, {
         onSuccess: (data) => {
-          console.log("🚀 ~ file: index.tsx:35 ~ onUploadImage ~ data:", data);
+          const linkPhoto = `${process.env.AWS_S3_ENDPOINT}${data.data?.key}`;
+          setValue(id, linkPhoto);
         },
       });
     }
@@ -65,7 +77,6 @@ export const ChickenForm: React.FC<IProps> = ({
         <div className="mb-4">
           <FormInput
             name="price"
-            type="number"
             placeholder="Giá"
             control={control}
             labelText="Giá"

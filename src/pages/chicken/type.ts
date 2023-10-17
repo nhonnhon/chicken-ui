@@ -1,7 +1,7 @@
 export interface IChickenInformation {
   name: string;
   description?: string;
-  price?: number;
+  price?: string | number;
   photo1: string;
   photo2?: string;
   photo3?: string;

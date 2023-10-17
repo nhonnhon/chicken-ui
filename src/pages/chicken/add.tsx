@@ -15,7 +15,7 @@ export default function ChickenAddNew() {
   const formDefaultValues = {
     name: "",
     description: "",
-    price: undefined,
+    price: "",
     photo1: "",
     photo2: "",
     photo3: "",
