@@ -15,6 +15,14 @@ export const ChickenList: React.FC<IProps> = ({ isAdmin }) => {
     perPage: 10,
   });
 
+  const onSold = (id: number) => {
+    //
+  };
+
+  const onDelete = (id: number) => {
+    //
+  };
+
   if (isFetching) {
     return <Loading />;
   }
@@ -57,6 +65,14 @@ export const ChickenList: React.FC<IProps> = ({ isAdmin }) => {
                   variant="contained"
                   color="danger"
                   text="Xóa"
+                  onClick={() => onDelete(chicken.id)}
+                />
+                <Button
+                  type="button"
+                  variant="contained"
+                  color="danger"
+                  text="Đã bán"
+                  onClick={() => onSold(chicken.id)}
                 />
               </div>
             ) : null}
