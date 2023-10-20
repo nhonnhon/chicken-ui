@@ -15,21 +15,21 @@ export async function post<T>(
 }
 
 export async function put<T>(
-  id: unknown,
+  url: string,
   data: any,
   options?: AxiosRequestConfig
 ) {
-  return axiosClient.put<T>(String(id), data, options);
+  return axiosClient.put<T>(url, data, options);
 }
 
 export async function patch<T>(
-  id: unknown,
+  url: string,
   data: any,
   options?: AxiosRequestConfig
 ) {
-  return axiosClient.patch<T>(String(id), data, options);
+  return axiosClient.patch<T>(url, data, options);
 }
 
-export async function destroy<T>(id: unknown, options?: AxiosRequestConfig) {
-  return axiosClient.delete<T>(String(id), options);
+export async function destroy<T>(url: string, options?: AxiosRequestConfig) {
+  return axiosClient.delete<T>(url, options);
 }

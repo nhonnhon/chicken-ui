@@ -6,7 +6,7 @@ import { signOut } from "next-auth/react";
 
 export const TopAdmin = () => {
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between mt-4">
       <Link
         href={ROUTES.DASHBOARD}
         className="text-md font-normal text-yellow-600 underline pr-4 inline-block mt-2"
