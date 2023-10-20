@@ -1,4 +1,7 @@
+import { StatusEnum } from "@/configs/constant.config";
+
 export interface IChickenInformation {
+  id?: number;
   name: string;
   description?: string;
   price?: string | number;
@@ -7,4 +10,5 @@ export interface IChickenInformation {
   photo3?: string;
   ytb_link?: string;
   tiktok_link?: string;
+  status?: StatusEnum;
 }

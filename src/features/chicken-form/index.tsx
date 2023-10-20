@@ -8,6 +8,8 @@ import { chickenFormSchema } from "./chicken-schema";
 import { useCreateChickenMutation } from "@/api/chicken/use-chicken-create.mutation";
 import { useRouter } from "next/router";
 import { ROUTES } from "@/configs/routes.config";
+import { useUpdateChickenMutation } from "@/api/chicken/use-chicken-update.mutation";
+import { useParams } from "next/navigation";
 
 interface IProps {
   isEdit?: boolean;
@@ -19,9 +21,11 @@ export const ChickenForm: React.FC<IProps> = ({
   formDefaultValues,
 }) => {
   const router = useRouter();
+  const params = useParams();
 
   const { mutate: uploadNewImage } = useUploadMutation();
   const { mutate: createChicken } = useCreateChickenMutation();
+  const { mutate: updateChicken } = useUpdateChickenMutation();
 
   const { control, handleSubmit, setValue } = useForm<IChickenInformation>({
     defaultValues: formDefaultValues,
@@ -33,11 +37,26 @@ export const ChickenForm: React.FC<IProps> = ({
       const numberPrice = parseInt(formValues.price as string);
       formValues.price = numberPrice;
     }
-    createChicken(formValues, {
-      onSuccess: () => {
-        router.push(ROUTES.DASHBOARD);
-      },
-    });
+    try {
+      if (isEdit) {
+        updateChicken(
+          { ...formValues, id: params.id as unknown as number },
+          {
+            onSuccess: () => {
+              router.push(ROUTES.DASHBOARD);
+            },
+          }
+        );
+      } else {
+        createChicken(formValues, {
+          onSuccess: () => {
+            router.push(ROUTES.DASHBOARD);
+          },
+        });
+      }
+    } catch (error) {
+      alert("Đã có lỗi xảy ra, thử lại sau");
+    }
   };
 
   const onUploadImage = (file: File, id: "photo1" | "photo2" | "photo3") => {
@@ -82,24 +101,28 @@ export const ChickenForm: React.FC<IProps> = ({
             labelText="Giá"
           />
         </div>
-        <div className="mb-6">
-          <FormUpload
-            labelText="Photo 1"
-            onUploadImage={(file: File) => onUploadImage(file, "photo1")}
-          />
-        </div>
-        <div className="mb-6">
-          <FormUpload
-            labelText="Photo 2"
-            onUploadImage={(file: File) => onUploadImage(file, "photo2")}
-          />
-        </div>
-        <div className="mb-6">
-          <FormUpload
-            labelText="Photo 3"
-            onUploadImage={(file: File) => onUploadImage(file, "photo3")}
-          />
-        </div>
+        {!isEdit && (
+          <>
+            <div className="mb-6">
+              <FormUpload
+                labelText="Photo 1"
+                onUploadImage={(file: File) => onUploadImage(file, "photo1")}
+              />
+            </div>
+            <div className="mb-6">
+              <FormUpload
+                labelText="Photo 2"
+                onUploadImage={(file: File) => onUploadImage(file, "photo2")}
+              />
+            </div>
+            <div className="mb-6">
+              <FormUpload
+                labelText="Photo 3"
+                onUploadImage={(file: File) => onUploadImage(file, "photo3")}
+              />
+            </div>
+          </>
+        )}
         <div className="mb-6">
           <FormInput
             name="ytb_link"

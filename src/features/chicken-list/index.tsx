@@ -1,9 +1,11 @@
 import { useDeleteChickenMutation } from "@/api/chicken/use-chicken-delete.mutation";
 import { useGetAllChickenQuery } from "@/api/chicken/use-chicken-list";
+import { useUpdateChickenStatusMutation } from "@/api/chicken/use-chicken-update.mutation";
 import { ChickenCard } from "@/components";
 import Button from "@/components/button";
 import Loading from "@/components/loading";
 import Pagination from "@/components/pagination";
+import { StatusEnum } from "@/configs/constant.config";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 
@@ -22,9 +24,18 @@ export const ChickenList: React.FC<IProps> = ({ isAdmin }) => {
   });
 
   const { mutateAsync: deleteChickenAPI } = useDeleteChickenMutation();
+  const { mutateAsync: updateChickenAPI } = useUpdateChickenStatusMutation();
 
-  const onSold = (id: number) => {
-    //
+  const onSold = async (id: number) => {
+    try {
+      await updateChickenAPI({
+        id,
+        status: StatusEnum.SOLD,
+      });
+      refetchList();
+    } catch (error) {
+      alert("Đã có lỗi xảy ra, thử lại sau");
+    }
   };
 
   const onDelete = async (id: number) => {
