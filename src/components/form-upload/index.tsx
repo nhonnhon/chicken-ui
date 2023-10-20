@@ -6,11 +6,13 @@ import Button from "../button";
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   labelText: string;
   onUploadImage: (file: File) => void;
+  uploadDone?: boolean;
 }
 
 export const FormUpload: React.FC<IProps> = ({
   labelText,
   onUploadImage,
+  uploadDone = false,
 }: IProps) => {
   const [imagePreview, setImagePreview] = React.useState<string | null>(null);
   const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
@@ -53,9 +55,10 @@ export const FormUpload: React.FC<IProps> = ({
         <Button
           type="button"
           variant="contained"
-          color="danger"
-          text="Lưu hình"
+          color={uploadDone ? "success" : "danger"}
+          text={uploadDone ? "Đã lưu hình" : "Lưu hình"}
           onClick={onSaveImage}
+          disabled={uploadDone}
         />
       ) : null}
     </div>

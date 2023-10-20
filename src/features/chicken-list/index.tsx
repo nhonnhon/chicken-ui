@@ -8,19 +8,22 @@ import Pagination from "@/components/pagination";
 import { StatusEnum } from "@/configs/constant.config";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
+import React from "react";
 
 interface IProps {
   isAdmin?: boolean;
 }
 
 export const ChickenList: React.FC<IProps> = ({ isAdmin }) => {
+  const [currentPage, setCurrentPage] = React.useState<number>(1);
+
   const {
     data,
     isFetching,
     refetch: refetchList,
   } = useGetAllChickenQuery({
-    page: 1,
-    perPage: 10,
+    page: currentPage,
+    perPage: 5,
   });
 
   const { mutateAsync: deleteChickenAPI } = useDeleteChickenMutation();
@@ -116,7 +119,7 @@ export const ChickenList: React.FC<IProps> = ({ isAdmin }) => {
         totalItems={data?.itemCount || 1}
         currentPage={data?.paginationDto?.page}
         itemPerPage={data?.paginationDto?.perPage}
-        // onChange={page => comboBuilderState.accommodationSetFilter({page})}
+        onChange={(page) => setCurrentPage(page)}
       />
     </div>
   );

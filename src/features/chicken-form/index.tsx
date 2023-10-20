@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { ROUTES } from "@/configs/routes.config";
 import { useUpdateChickenMutation } from "@/api/chicken/use-chicken-update.mutation";
 import { useParams } from "next/navigation";
+import { useState } from "react";
 
 interface IProps {
   isEdit?: boolean;
@@ -22,6 +23,10 @@ export const ChickenForm: React.FC<IProps> = ({
 }) => {
   const router = useRouter();
   const params = useParams();
+
+  const [successUpload, setSuccessUpload] = useState<
+    Record<string, boolean> | undefined
+  >();
 
   const { mutate: uploadNewImage } = useUploadMutation();
   const { mutate: createChicken } = useCreateChickenMutation();
@@ -65,6 +70,10 @@ export const ChickenForm: React.FC<IProps> = ({
         onSuccess: (data) => {
           const linkPhoto = `${process.env.AWS_S3_ENDPOINT}${data.data?.key}`;
           setValue(id, linkPhoto);
+          setSuccessUpload({
+            ...successUpload,
+            [id]: true,
+          });
         },
       });
     }
@@ -107,18 +116,21 @@ export const ChickenForm: React.FC<IProps> = ({
               <FormUpload
                 labelText="Photo 1"
                 onUploadImage={(file: File) => onUploadImage(file, "photo1")}
+                uploadDone={successUpload?.photo1 === true}
               />
             </div>
             <div className="mb-6">
               <FormUpload
                 labelText="Photo 2"
                 onUploadImage={(file: File) => onUploadImage(file, "photo2")}
+                uploadDone={successUpload?.photo2 === true}
               />
             </div>
             <div className="mb-6">
               <FormUpload
                 labelText="Photo 3"
                 onUploadImage={(file: File) => onUploadImage(file, "photo3")}
+                uploadDone={successUpload?.photo2 === true}
               />
             </div>
           </>
