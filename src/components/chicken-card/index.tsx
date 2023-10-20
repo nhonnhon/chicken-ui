@@ -2,6 +2,9 @@ import Image from "next/image";
 import Heading from "../heading";
 import { formatCurrency } from "@/util/format-currency";
 import { PlayCircleIcon } from "@heroicons/react/20/solid";
+import React from "react";
+import Button from "../button";
+import { formatVideoLink } from "@/util/format-video-link";
 
 interface IProps {
   id: number;
@@ -22,6 +25,8 @@ export const ChickenCard: React.FC<IProps> = ({
   video1,
   video2,
 }) => {
+  const [linkVideo, setLinkVideo] = React.useState<string>("");
+
   return (
     <>
       <div className="md:flex md:h-56 justify-center align-center">
@@ -47,28 +52,41 @@ export const ChickenCard: React.FC<IProps> = ({
           {price ? formatCurrency("vn-VN", price) : "--"}{" "}
         </span>
       </p>
+
       {video1 ? (
-        <a
-          target="_blank"
-          href="https://vimeo.com/872775502?share=copy"
-          rel="noopener noreferrer"
-          className="flex justify-center"
+        <Button
+          variant="outlined"
+          onClick={() => {
+            setLinkVideo(formatVideoLink(video1));
+          }}
         >
           <PlayCircleIcon className="h-6 w-6 text-rose-500" />
           <span className="ml-1">Xem video 1</span>
-        </a>
+        </Button>
       ) : null}
+      <br />
       {video2 ? (
-        <a
-          target="_blank"
-          href="https://vimeo.com/872775502?share=copy"
-          rel="noopener noreferrer"
-          className="flex justify-center"
+        <Button
+          variant="outlined"
+          onClick={() => {
+            setLinkVideo(formatVideoLink(video2));
+          }}
         >
           <PlayCircleIcon className="h-6 w-6 text-rose-500" />
           <span className="ml-1">Xem video 2</span>
-        </a>
+        </Button>
       ) : null}
+      {linkVideo && (
+        <iframe
+          src={`https://player.vimeo.com/video/${linkVideo}`}
+          width="640"
+          height="564"
+          frameBorder="0"
+          allow="autoplay; fullscreen"
+          allowFullScreen
+          className="w-full"
+        ></iframe>
+      )}
     </>
   );
 };

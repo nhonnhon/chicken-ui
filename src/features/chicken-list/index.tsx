@@ -1,8 +1,10 @@
+import { useDeleteChickenMutation } from "@/api/chicken/use-chicken-delete.mutation";
 import { useGetAllChickenQuery } from "@/api/chicken/use-chicken-list";
 import { ChickenCard } from "@/components";
 import Button from "@/components/button";
 import Loading from "@/components/loading";
 import Pagination from "@/components/pagination";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 
 interface IProps {
@@ -10,17 +12,28 @@ interface IProps {
 }
 
 export const ChickenList: React.FC<IProps> = ({ isAdmin }) => {
-  const { data, isFetching } = useGetAllChickenQuery({
+  const {
+    data,
+    isFetching,
+    refetch: refetchList,
+  } = useGetAllChickenQuery({
     page: 1,
     perPage: 10,
   });
+
+  const { mutateAsync: deleteChickenAPI } = useDeleteChickenMutation();
 
   const onSold = (id: number) => {
     //
   };
 
-  const onDelete = (id: number) => {
-    //
+  const onDelete = async (id: number) => {
+    try {
+      await deleteChickenAPI(id);
+      refetchList();
+    } catch (error) {
+      alert("Đã có lỗi xảy ra, thử lại sau");
+    }
   };
 
   if (isFetching) {
@@ -30,12 +43,19 @@ export const ChickenList: React.FC<IProps> = ({ isAdmin }) => {
   return (
     <div className="py-4">
       {isAdmin ? (
-        <Link
-          href={`/chicken/add`}
-          className="text-lg font-normal text-yellow-500 underline pr-4"
-        >
-          Thêm mới
-        </Link>
+        <div className="flex justify-between align-center">
+          <Link
+            href={`/chicken/add`}
+            className="text-lg font-normal text-yellow-500 underline pr-4"
+          >
+            Thêm mới
+          </Link>
+          <Button
+            variant="contained"
+            text="Đăng xuất"
+            onClick={() => signOut()}
+          />
+        </div>
       ) : null}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 pt-4">
         {data?.data.map((chicken) => (
@@ -53,7 +73,7 @@ export const ChickenList: React.FC<IProps> = ({ isAdmin }) => {
               video2={chicken.tiktok_link}
             />
             {isAdmin ? (
-              <div className="flex items-center justify-center mt-3">
+              <div className="flex items-center justify-center mt-3 space-x-4">
                 <Link
                   href={`/chicken/${chicken.id}`}
                   className="text-md font-normal text-yellow-600 underline pr-4"
@@ -69,8 +89,8 @@ export const ChickenList: React.FC<IProps> = ({ isAdmin }) => {
                 />
                 <Button
                   type="button"
-                  variant="contained"
-                  color="danger"
+                  variant="outlined"
+                  color="success"
                   text="Đã bán"
                   onClick={() => onSold(chicken.id)}
                 />
