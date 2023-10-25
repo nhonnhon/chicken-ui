@@ -2,7 +2,7 @@ import { useUploadMutation } from "@/api/upload/use-upload-mutation";
 import { FormInput, FormUpload } from "@/components";
 import Button from "@/components/button";
 import Heading from "@/components/heading";
-import { IChickenInformation } from "@/pages/chicken/type";
+import { IChickenInformation } from "@/common/type";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { chickenFormSchema } from "./chicken-schema";
 import { useCreateChickenMutation } from "@/api/chicken/use-chicken-create.mutation";

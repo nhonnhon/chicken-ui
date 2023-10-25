@@ -5,11 +5,9 @@ import { QueryParamsType } from "../type";
 import * as HttpRequest from "../http-request";
 import { IGetAllChickenParam, IGetAllChickenResponse } from "./type";
 
-const getAllChicken = async ({
-  queryKey,
-}: QueryParamsType): Promise<IGetAllChickenResponse> => {
-  const [, params] = queryKey;
-
+const getAllChicken = async (
+  params: IGetAllChickenParam
+): Promise<IGetAllChickenResponse> => {
   const { page = 1, perPage = 10, status } = params as IGetAllChickenParam;
 
   const url = [`${API_ENDPOINTS.CHICKEN}`];
@@ -25,7 +23,7 @@ const getAllChicken = async ({
 const useGetAllChickenQuery = (params: IGetAllChickenParam) => {
   return useQuery<IGetAllChickenResponse, Error>(
     [API_ENDPOINTS.CHICKEN, params],
-    getAllChicken
+    () => getAllChicken(params)
   );
 };
 

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosRequestHeaders } from "axios";
 import { getSession, signOut } from "next-auth/react";
 
 const axiosClient = axios.create({
@@ -18,7 +18,7 @@ axiosClient.interceptors.request.use(
       config.headers = {
         ...config.headers,
         Authorization: `Bearer ${session.jwt}`,
-      };
+      } as AxiosRequestHeaders;
     }
 
     return config;

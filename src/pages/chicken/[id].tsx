@@ -10,7 +10,7 @@ import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { IChickenInformation } from "./type";
+import { IChickenInformation } from "../../common/type";
 import { TopAdmin } from "@/components";
 
 export default function ChickenDetail() {
