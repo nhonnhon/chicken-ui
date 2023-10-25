@@ -6,6 +6,7 @@ import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
 import { Markazi_Text } from "next/font/google";
 import { QueryClient, QueryClientProvider } from "react-query";
+import Head from "next/head";
 
 const markaziText = Markazi_Text({
   weight: ["400", "700"],
@@ -40,6 +41,24 @@ export default function App({
 
   return (
     <>
+      <Head>
+        <title>Chiến thần gà chọi</title>
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <meta
+          name="description"
+          content="Chiến thần gà chọi - Nơi chia sẻ, mô tả hình ảnh, video về các chiến kê cho anh em tham khảo"
+          key="desc"
+        />
+        <meta property="og:title" content="Chiến thần gà chọi" />
+        <meta
+          property="og:description"
+          content="Chiến thần gà chọi - Nơi chia sẻ, mô tả hình ảnh, video về các chiến kê cho anh em tham khảo"
+        />
+        <meta
+          property="og:image"
+          content="https://aws-chicken.s3.ap-southeast-1.amazonaws.com/logo.png"
+        />
+      </Head>
       <style jsx global>{`
         html {
           font-family: ${markaziText.style.fontFamily};
