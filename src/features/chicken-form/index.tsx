@@ -130,7 +130,7 @@ export const ChickenForm: React.FC<IProps> = ({
               <FormUpload
                 labelText="Photo 3"
                 onUploadImage={(file: File) => onUploadImage(file, "photo3")}
-                uploadDone={successUpload?.photo2 === true}
+                uploadDone={successUpload?.photo3 === true}
               />
             </div>
           </>

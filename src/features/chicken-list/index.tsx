@@ -109,7 +109,14 @@ export const ChickenList: React.FC<IProps> = ({ isAdmin }) => {
                   onClick={() => onSold(chicken.id)}
                 />
               </div>
-            ) : null}
+            ) : (
+              <Link
+                href={`/view/${chicken.id}`}
+                className="text-lg font-normal text-yellow-500 underline pr-4"
+              >
+                Xêm thêm hình và video
+              </Link>
+            )}
           </div>
         ))}
       </div>
