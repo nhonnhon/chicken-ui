@@ -54,8 +54,21 @@ export const ChickenList: React.FC<IProps> = ({ isAdmin }) => {
     return <Loading />;
   }
 
+  const youtube = data?.data?.find((c) => c.id === 1)?.ytb_link;
+
   return (
     <div className="py-4">
+      <div className="flex justify-center">
+        <iframe
+          width="560"
+          height="315"
+          src={`https://www.youtube.com/embed/${youtube}?autoplay=1`}
+          title="YouTube video player"
+          frameBorder="0"
+          allow="autoplay; encrypted-media"
+          allowFullScreen
+        ></iframe>
+      </div>
       {isAdmin ? (
         <div className="flex justify-between align-center">
           <Link
